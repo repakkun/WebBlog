@@ -1,0 +1,48 @@
+﻿@model WebBlog.Models.User
+
+<form method="post" asp-action="Registry">
+        <div class="border rounded p-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-6">
+                    <h3 class="text-light pl-3">Добро пожаловать в WebBlog!</h3>
+                </div>
+                <div class="col-6">
+                    <h5 class="text-light pl-3">Уже есть аккаунт?</h5>
+                    <a asp-action="Authorization" class="btn btn-outline-secondary text-light w-50 pl-3">Авторизоваться</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">  
+                    <div class="form-group row">
+                        <div class="col-6 text-light">
+                            <label asp-for="UserName"></label>
+                        </div>
+                        <div class="col-6 text-light">
+                            <label asp-for="Password"></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <input asp-for="UserName" class="form-control" name="userName" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="col-6">
+                            <input type="password" asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-8 offset-2 row">                          
+                            <div class="col">
+                                <input type="submit" class="btn btn-info w-75" value="Зарегистрироваться"/>
+                            </div>                          
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-danger w-75">Отмена</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

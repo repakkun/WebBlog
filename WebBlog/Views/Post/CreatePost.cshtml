@@ -1,0 +1,110 @@
+﻿@model WebBlog.Models.Post
+
+<form method="post" asp-action="CreatePost">
+    
+    <style>
+        #helper{
+            width: 0px;
+            border: none;
+            outline: none;
+        }
+        input {
+            border: none;
+            width: 600px;
+            margin-top: 3px;
+            margin-left: 120px;
+            margin-right: 120px;
+            background: #131F2D;
+        }
+
+            input::placeholder {
+                color: lightslategrey;
+            }
+
+        a {
+            margin-bottom: 20px;
+        }
+
+        #publish {
+            width: auto;
+        }
+    </style>
+    <input id="helper" asp-for="PostBody" />
+    <p></p>
+    <style>
+        .grow-wrap {
+            /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+            display: grid;
+        }
+
+            .grow-wrap::after {
+                /* Note the weird space! Needed to preventy jumpy behavior */
+                content: attr(data-replicated-value) " ";
+                /* This is how textarea text behaves */
+                white-space: pre-wrap;
+                /* Hidden from view, clicks, and screen readers */
+                visibility: hidden;
+            }
+
+            .grow-wrap > textarea {
+                /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+                resize: none;
+                /* Firefox shows scrollbar on growth, you can hide like this. */
+                overflow: hidden;
+                outline: none;
+            }
+
+            .grow-wrap > textarea,
+            .grow-wrap::after {
+                /* Identical styling required!! */
+                outline: none;
+                padding: 0.5rem;
+                font: inherit;
+                /* Place on top of each other */
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+        h6{
+            margin-left: 110px;
+        }
+        body {
+            background-color: #131F2D;
+        }
+
+        textarea {
+            margin-top: 2px;
+            outline: none;
+            margin-left: 120px;
+            margin-right: 120px;
+            background: #131F2D;
+        }
+
+            textarea::placeholder {
+                color: floralwhite;
+            }
+    </style>
+
+    <a asp-action="Index" class="btn btn-outline-danger w-1">Вернуться</a>
+    <h2><input asp-for="PostName" placeholder="Заголовок Вашего поста" class="text-light pl-2" /></h2>
+
+    <div class="grow-wrap">
+        <textarea class="text-light pl-2" style="white-space: pre-line" placeholder="Текст вашего поста" name="text" id="text" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
+    </div>
+    <h6 class="text-secondary pl-3">Необходимо сохранить изменения перед публикацией!</h6>
+    <input id="publish" type="submit" class="btn btn-outline-primary w-1" value="Опубликовать" />
+    
+</form>
+<style>
+    #button1{
+        margin-left: 120px;
+        margin-top: 5px;
+    }
+</style>
+<button id="button1" value="Изменить" class="btn btn-outline-secondary w-10">Сохранить изменения</button>
+<script>
+    document.getElementById('button1').onclick = function () {
+        alert("Текст сохранен!");
+        str = document.getElementById('text').value.replace(/(?:\r\n|\r|\n)/g, '<br>').toString();
+        document.getElementById('helper').value = str;
+    };
+</script>
