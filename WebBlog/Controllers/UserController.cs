@@ -12,6 +12,7 @@ namespace WebBlog.Controllers
     {
         private readonly ApplicationDbContext _db;
 
+        //конструктор, на входе объект получаем контекст БД
         public UserController(ApplicationDbContext db)
         {
             _db = db;
@@ -28,6 +29,7 @@ namespace WebBlog.Controllers
         }
 
         //Post-Registry
+        //Регистрация пользователя
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Registry(User user)
@@ -39,17 +41,15 @@ namespace WebBlog.Controllers
                 if (obj.UserName == user.UserName)
                 {
                     return RedirectToAction("BadRegistry");              
-                }
-                
-
+                }                
             } 
             if (user.UserName == null || user.Password == null)
             {
-               return RedirectToAction("BadRegistry");
+               return RedirectToAction("BadRegistry"); //В случае неверно введенных данных - кидаем на ошибочную форму
             }          
             _db.Users.Add(user);
             _db.SaveChanges();                 
-            return RedirectToAction("Index", "Post");
+            return RedirectToAction("Index", "Post"); //Успех перенесет в "Сообщества"
             
         }
 
@@ -60,6 +60,7 @@ namespace WebBlog.Controllers
         }
 
         //Post-Authorization
+        //Авторизация пользователя
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Authorization(User user)
@@ -85,7 +86,7 @@ namespace WebBlog.Controllers
             return RedirectToAction("BadAuthorization");
         }
 //--------------------------------------------------------------------------------------------
-//                                   BAD VALIDATION (poxuy na OOP)
+//                                   BAD VALIDATION ()
 //--------------------------------------------------------------------------------------------
 
         //Get-BadRegistry
@@ -123,8 +124,6 @@ namespace WebBlog.Controllers
         public IActionResult BadAuthorization()
         {
             return View();
-            //IEnumerable<User> objList = _db.Users;
-            //return View(objList);
         }
 
         //Post-BadAuthorization

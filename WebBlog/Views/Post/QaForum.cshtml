@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WebBlog.Models.Post>
+<style>
+    h3, h1 {
+        color: aliceblue;
+        width: auto;
+        border-bottom: solid;
+        border-bottom-color: aliceblue;
+        margin-left: 120px;
+    }
+
+    .grow-wrap {
+        /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+        display: grid;
+    }
+
+        .grow-wrap::after {
+            /* Note the weird space! Needed to preventy jumpy behavior */
+            content: attr(data-replicated-value) " ";
+            /* This is how textarea text behaves */
+            white-space: pre-wrap;
+            /* Hidden from view, clicks, and screen readers */
+            visibility: hidden;
+        }
+
+        .grow-wrap > textarea {
+            /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+            resize: none;
+            /* Firefox shows scrollbar on growth, you can hide like this. */
+            overflow: hidden;
+            outline: none;
+        }
+
+        .grow-wrap > textarea,
+        .grow-wrap::after {
+            /* Identical styling required!! */
+            outline: none;
+            padding: 0.5rem;
+            font: inherit;
+            /* Place on top of each other */
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+
+
+    body {
+        background-color: #131F2D;
+    }
+
+    textarea {
+        margin-top: 2px;
+        outline: none;
+        border: none;
+        margin-left: 120px;
+        margin-right: 120px;
+        background: #131F2D;
+        height: 700px;
+    }
+</style>
+
+
+@foreach (var item in Model)
+{
+    if (item.PostTag == "QA")
+    {
+        <div class="form-group row col-12">
+            <div class="col-9 text-light">
+                <h3>
+                    @item.PostName
+                </h3>
+            </div>
+            <div class="col-3 text-primary">
+                <h5>
+                    Автор: @item.WhoPosted #@item.PostTag
+                </h5>
+            </div>
+        </div>
+        <div class="grow-wrap">
+            <textarea readonly id="text" class="text-light pl-3">@item.PostBody.Replace("<br>", "\n")</textarea>
+        </div>
+
+    }
+}

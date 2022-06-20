@@ -1,13 +1,15 @@
 ﻿@model WebBlog.Models.Post
-
+@using System.Net;
+@using System.ComponentModel;
 <form method="post" asp-action="CreatePost">
-    
+
     <style>
-        #helper{
+        #helper, #helper2 {
             width: 0px;
             border: none;
             outline: none;
         }
+
         input {
             border: none;
             width: 600px;
@@ -64,9 +66,10 @@
                 grid-area: 1 / 1 / 2 / 2;
             }
 
-        h6{
+        h6 {
             margin-left: 110px;
         }
+
         body {
             background-color: #131F2D;
         }
@@ -80,7 +83,57 @@
         }
 
             textarea::placeholder {
-                color: floralwhite;
+                color: lightgray;
+            }
+
+        /*Для селектора*/
+        :root {
+            --background-gradient: linear-gradient(30deg, #f39c12 30%, #f1c40f);
+            --gray: #34495e;
+            --darkgray: #2c3e50;
+        }
+
+        select {
+            /* Reset Select */
+            appearance: none;
+            outline: 0;
+            border: 0;
+            box-shadow: none;
+            /* Personalize */
+            flex: 1;
+            padding: 0 1em;
+            color: #fff;
+            background-color: var(--darkgray);
+            background-image: none;
+            cursor: pointer;
+        }
+            /* Remove IE arrow */
+            select::-ms-expand {
+                display: none;
+            }
+        /* Custom Select wrapper */
+        .select {
+            position: relative;
+            display: flex;
+            width: 20em;
+            height: 3em;
+            border-radius: .25em;
+            overflow: hidden;
+        }
+            /* Arrow */
+            .select::after {
+                content: '\25BC';
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 1em;
+                background-color: #34495e;
+                transition: .25s all ease;
+                pointer-events: none;
+            }
+            /* Transition */
+            .select:hover::after {
+                color: #f39c12;
             }
     </style>
 
@@ -91,16 +144,24 @@
         <textarea class="text-light pl-2" style="white-space: pre-line" placeholder="Текст вашего поста" name="text" id="text" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
     </div>
     <h6 class="text-secondary pl-3">Необходимо сохранить изменения перед публикацией!</h6>
+
     <input id="publish" type="submit" class="btn btn-outline-primary w-1" value="Опубликовать" />
-    
+    <select asp-for="PostTag">
+        <option>Разное</option>
+        <option>C#</option>
+        <option>GitHub</option>
+        <option>QA</option>
+        <option>Аналитика</option>
+        <option>FrontEnd</option>
+    </select>
 </form>
 <style>
-    #button1{
+    #button1 {
         margin-left: 120px;
         margin-top: 5px;
     }
 </style>
-<button id="button1" value="Изменить" class="btn btn-outline-secondary w-10">Сохранить изменения</button>
+<button id="button1" value="Изменить" class="btn btn-secondary w-10">Сохранить изменения</button>
 <script>
     document.getElementById('button1').onclick = function () {
         alert("Текст сохранен!");

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebBlog.Data;
 
 namespace WebBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220617224635_imFine")]
+    partial class imFine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,10 +40,12 @@ namespace WebBlog.Migrations
                     b.Property<string>("PostTag")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WhoPosted")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("WhoPostedId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("WhoPostedId");
 
                     b.ToTable("Posts");
                 });
@@ -98,6 +102,15 @@ namespace WebBlog.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserPosts");
+                });
+
+            modelBuilder.Entity("WebBlog.Models.Post", b =>
+                {
+                    b.HasOne("WebBlog.Models.User", "WhoPosted")
+                        .WithMany()
+                        .HasForeignKey("WhoPostedId");
+
+                    b.Navigation("WhoPosted");
                 });
 #pragma warning restore 612, 618
         }

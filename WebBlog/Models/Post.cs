@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 namespace WebBlog.Models
 {
     public class Post
@@ -8,5 +9,7 @@ namespace WebBlog.Models
         public string PostName { get; set; }
         public string PostTag { get; set; }
         public string PostBody { get; set; }
+        public string WhoPosted { get; set; } 
+        public DateTime PostCreate { get; set; }
     }
 }
